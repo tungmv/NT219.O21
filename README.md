@@ -12,12 +12,12 @@
 - install liboqs-py (replace --parallel option match the number of available cores on your system)
 ``` shell
 mkdir oqs && cd oqs
-git clone --depth=1 https://github.com/open-quantum-safe/liboqs
-cmake -S liboqs -B liboqs/build -DBUILD_SHARED_LIBS=ON
-cmake --build liboqs/build --parallel 8
-cmake --build liboqs/build --target install
-cd ..
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(realpath liboqs/lib)
 git clone --depth=1 https://github.com/open-quantum-safe/liboqs-python
 cd liboqs-python
 pip install .
+# run example 
+python3 liboqs-python/examples/kem.py
+python3 liboqs-python/examples/sig.py
+python3 liboqs-python/examples/rand.py
 ```
