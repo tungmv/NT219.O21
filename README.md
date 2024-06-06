@@ -12,7 +12,6 @@
 - install liboqs-py (replace --parallel option match the number of available cores on your system)
 ``` shell
 mkdir oqs && cd oqs
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(realpath liboqs/lib)
 git clone --depth=1 https://github.com/open-quantum-safe/liboqs-python
 cd liboqs-python
 pip install .
