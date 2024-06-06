@@ -8,4 +8,3 @@
     - I love python - https://github.com/open-quantum-safe/liboqs-python.git - https://github.com/pyca/pyopenssl.git
     - https://github.com/GiacomoPope/kyber-py.git
     - https://cryptopedia.dev/posts/kyber/ - algorithm details
->>>>>>> f55b094 (update src folder)
