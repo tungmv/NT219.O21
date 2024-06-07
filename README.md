@@ -9,7 +9,7 @@
     - https://github.com/GiacomoPope/kyber-py.git
     - https://cryptopedia.dev/posts/kyber/ - algorithm details
 ## DOCS
-- install liboqs-py (replace --parallel option match the number of available cores on your system)
+- install liboqs-py
 ``` shell
 mkdir oqs && cd oqs
 git clone --depth=1 https://github.com/open-quantum-safe/liboqs-python
