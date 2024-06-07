@@ -1,0 +1,117 @@
+A quick guide to download liboqs, oqs provider and get everything set up.
+
+LIBOQS: clone the newest main branch, build and run as instructed by the repo's README.md
+
+OQS PROVIDER: as for openssl 3.0.0+, we use oqs provider to integrate liboqs with openssl. For openssl 1.1.1, we use oqs-openssl 1.1.1 stable fork but fuck that just use openssl 3.2.0
+
+-> Install openssl 3.2.0
+run "openssl version" to check current openSSL version. If its < 3.2.0, delete: 
+(ubuntu:)
+
+> sudo apt-get remove --purge openssl
+> sudo apt-get autoremove
+
+check again:
+
+> openssl version
+
+now install
+
+> sudo apt-get update
+> sudo apt-get install build-essential checkinstall zlib1g-dev wget
+
+(cd to whatever)
+
+> wget https://www.openssl.org/source/openssl-3.2.0.tar.gz
+
+> tar -xzvf openssl-3.2.0.tar.gz
+> cd openssl-3.2.0
+> ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl
+
+> make -j # {num of processors/ run "nproc" -> if n, set make -j n+1 for stability or make -j n*2 for speed, for example if nproc -> 12 then run make -j 13/24}
+
+> make test
+
+> sudo make install
+
+> export LD_LIBRARY_PATH=/usr/local/openssl/lib64:$LD_LIBRARY_PATH
+
+> export PATH=/usr/local/openssl/bin:$PATH
+
+( also add those 2 to ~/.bashrc for permanent change )
+
+> sudo ldconfig # refresh dynamic linker
+
+> openssl version # check
+
+-> Install oqs provider
+
+clone the repo.
+
+enter {repo}/oqsprov/
+
+follow the usual instruction until you encounter the OQS_SIG error
+
+go into {installed dir}/sig_stfl.h (!! open in sudo mode because idk unix horny when you fuck around in /usr/) the error should also tell the directory to the horny file
+
+search for "#define OQS_SIG_STFL OQS_SIG" or like that
+
+it will look like this:
+..
+#ifndef ..
+# def ..
+#else ..
+// the OQS_SIG_STFL struct itself
+#endif
+
+-> comment out all the conditional bs 
+
+..
+// #ifndef
+// #def
+// #else
+
+do nothing to the struct
+
+// #endif
+
+save the file
+
+go back to oqs_provider repo
+> mkdir build && cd build
+> cmake -Dliboqs_DIR=/usr/local/oqs/lib/cmake/liboqs -DOPENSSL_ROOT_DIR=/usr/local/openssl -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
+(the cmake config may vary for directories)
+> sudo make install
+
+now get your ass to /usr/local/openssl/openssl.cnf
+
+open file as sudo because..
+
+anyway, add some lines for oqs_provider so it looks like this:
+
+openssl_conf = openssl_init
+...
+
+[openssl_init]
+providers = provider_sect
+
+...
+
+[provider_sect]
+default = default_sect
+oqsprovider = oqsprovider_sect
+
+...
+
+[default_sect]
+activate = 1
+
+[oqsprovider_sect]
+activate = 1
+module = /usr/local/lib/ossl-modules/oqsprovider.so # the dir may vary ofc, it may be in /usr/openssl/lib64/ossl-provider/
+
+now run openssl list -providers
+
+the oqs provider should be listed. If not fix it yourself lazy ass bitch
+
+- done.
