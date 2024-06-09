@@ -1,22 +1,15 @@
 # Do an MMH NT219.O21 
 ## TODO
-- encrypt/decrypt kyber using openquantumsafe's openssl - github.com/open-quantum-safe/openssl - github.com/open-quantum-safe/liboqs
-- encrypt/decrypt kyber using openquantumsafe's openssl 
 - establish keys of symmetric-key systems in higher-level protocols (TLS)
 - Resources
-    <!--https://github.com/open-quantum-safe/openssl - https://github.com/open-quantum-safe/liboqs ` -->
-    - https://github.com/open-quantum-safe/liboqs-python.git - https://github.com/pyca/pyopenssl.git
+    - https://github.com/open-quantum-safe/openssl - https://github.com/open-quantum-safe/liboqs 
     - https://github.com/GiacomoPope/kyber-py.git
     - https://cryptopedia.dev/posts/kyber/ - algorithm details
-## DOCS
-- install liboqs-py
-``` shell
-mkdir oqs && cd oqs
-git clone --depth=1 https://github.com/open-quantum-safe/liboqs-python
-cd liboqs-python
-pip install .
-# run example 
-python3 liboqs-python/examples/kem.py
-python3 liboqs-python/examples/sig.py
-python3 liboqs-python/examples/rand.py
-```
+https://pq.cloudflareresearch.com/
+    - X25519Kyber512Draft00 and X25519Kyber768Draft00 - https://datatracker.ietf.org/doc/draft-tls-westerbaan-xyber768d00/
+https://blog.cloudflare.com/post-quantum-for-all/
+
+
+- Hosting your own WebSSH server on Ubuntu using X25519+Kyber certificates 
+    - Compile OpenSSL with Post-Quantum Support
+    - Generate X25519+Kyber Certificates
